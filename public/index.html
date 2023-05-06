@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="/umi.js"></script>
+    <!-- <h1>交易压力监测</h1>
+    <p>
+      以下所有问题，1~5分数值分别表示：
+      <br />1. 轻松 2. 稍微担心 3. 略有压力 4. 压力较大 5. 压力非常大
+      <br />或者： 1. 完全没有 2. 稍微有 3. 有 4. 较多 5. 频繁
+      <br />总之，越接近5分，则表示越大、越相关、越认可；越接近一分则表示越小、越不相关、越不认可。
+    </p> -->
+    <form id="form">
+      <div id="form-dynamic"></div>
+      <button type="submit">提交</button>
+    </form>
+    <script>
+      (async () => {
+        const form = document.getElementById('form');
+        const formDynamic = document.getElementById('form-dynamic');
+
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          const data = [];
+
+          const formData = new FormData(e.target);
+
+          for (const [id, value] of formData.entries()) {
+            data.push({ id, value });
+          }
+
+          fetch('/submit_daily.json', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+              'content-type': 'application/json',
+            },
+          });
+        });
+
+        const { data: questions } = await fetch('/questions.json').then((res) =>
+          res.json()
+        );
+
+        const {} = await fetch(`/report.json?date_range=`).then((res) =>
+          res.json()
+        );
+
+        const {
+          data: { isTodaySubmitted },
+        } = await fetch('/is_today_submitted.json').then((res) => res.json());
+
+        console.log(questions, isTodaySubmitted);
+
+        const html = questions
+          .map(({ id, title }, index) => {
+            return `
+          <div>
+            <h2>${index + 1}. ${title}</h2>
+            <input type="radio" id="${id}-1" checked name="${id}" value="1"><label for="${id}">1</label>
+            <input type="radio" id="${id}-2" name="${id}" value="2"><label for="${id}">2</label>
+            <input type="radio" id="${id}-3" name="${id}" value="3"><label for="${id}">3</label>
+            <input type="radio" id="${id}-4" name="${id}" value="4"><label for="${id}">4</label>
+            <input type="radio" id="${id}-5" name="${id}" value="5"><label for="${id}">5</label>
+          </div>
+          `;
+          })
+          .join('<br>');
+
+        formDynamic.innerHTML = html;
+      })();
+    </script>
+  </body>
+</html>

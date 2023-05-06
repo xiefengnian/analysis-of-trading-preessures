@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "author": "xiefengnian.xfn <xiefengnian.xfn@antgroup.com>",
+  "scripts": {
+    "dev": "umi dev",
+    "build": "umi build",
+    "postinstall": "umi setup",
+    "setup": "umi setup",
+    "start": "npm run dev"
+  },
+  "dependencies": {
+    "@antv/f2": "^4.0.44",
+    "ahooks": "^3.7.7",
+    "antd": "^5.4.6",
+    "axios": "^1.4.0",
+    "umi": "^4.0.67"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.5",
+    "@types/react-dom": "^18.2.4",
+    "typescript": "^5.0.4"
+  }
+}
