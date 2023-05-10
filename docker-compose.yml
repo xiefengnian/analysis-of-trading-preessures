@@ -1,0 +1,39 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: my20220dev/trading_stress_analysis:latest
+    ports:
+      - '8080:8080'
+    links:
+      - database
+    depends_on:
+      - database
+    # restart: always
+    environment:
+      - MONGO_URL=mongodb://test:test@database:27017/stress_monitor
+    command: /bin/bash -c "npm i --registry=https://registry.npmmirror.com && npm start"
+  database:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root111111
+      MONGO_INITDB_DATABASE: stress_monitor
+    command: [--auth, --quiet]
+    privileged: true
+    volumes:
+      - './data/db:/data/db'
+      - './config/db_init.js:/docker-entrypoint-initdb.d/db_init.js:ro'
+  # db:
+  #   image: aashreys/mongo-auth:latest
+  #   environment:
+  #     - AUTH=yes
+  #     - MONGODB_ADMIN_USER=admin
+  #     - MONGODB_ADMIN_PASS=admin123
+  #     - MONGODB_APPLICATION_DATABASE=sample
+  #     - MONGODB_APPLICATION_USER=aashrey
+  #     - MONGODB_APPLICATION_PASS=admin123
+  #   ports:
+  #     - "27017:27017"

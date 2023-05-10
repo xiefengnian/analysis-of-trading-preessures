@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'antd/es/form/Form';
 import { Canvas, Chart, Line, Axis, Tooltip, Point } from '@antv/f2';
 import { Result } from 'antd';
+import TextScroll from '@/components/TextScroll';
 
 import IMAGE_1 from '../assets/闭嘴.png';
 import IMAGE_2 from '../assets/惊吓.png';
@@ -28,7 +29,7 @@ const getStressState = (stress) => {
 const FormItem = Form.Item;
 
 const client = axios.create({
-  baseURL: '/server',
+  baseURL: '/',
 });
 
 client.interceptors.response.use(
@@ -168,8 +169,10 @@ export default function HomePage() {
                     ></canvas>
                     <Divider>每日一句</Divider>
                     <Card bordered={false} bodyStyle={{ opacity: 0.55 }}>
-                      “优秀的投机客总是在等待，总是有耐心，等待着市场证实他们的判断。要记住，在市场本身的表现证实你的看法之前，不要完全相信你的判断。”
-                      ————杰西·利弗莫尔
+                      <TextScroll>
+                        “优秀的投机客总是在等待，总是有耐心，等待着市场证实他们的判断。要记住，在市场本身的表现证实你的看法之前，不要完全相信你的判断。”
+                        ————杰西·利弗莫尔
+                      </TextScroll>
                     </Card>
                   </div>
                 }

@@ -1,6 +1,11 @@
 node_modules
 tmp
 .umi
+.umi-production
 dist
 
 web/node_modules
+
+public/web
+
+data
