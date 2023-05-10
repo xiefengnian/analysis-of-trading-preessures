@@ -29,7 +29,7 @@ const getStressState = (stress) => {
 const FormItem = Form.Item;
 
 const client = axios.create({
-  baseURL: '/',
+  baseURL: apiBaseURL,
 });
 
 client.interceptors.response.use(
@@ -84,8 +84,6 @@ export default function HomePage() {
             avg22: item.avg22 ? item.avg22 * 100 : 0,
           };
         });
-
-        console.log(data);
 
         const scale = {
           date: {
@@ -146,7 +144,7 @@ export default function HomePage() {
     <Card
       bordered={false}
       style={{ width: '100%', height: '100%' }}
-      bodyStyle={{ maxHeight: '100%', overflowY: 'scroll' }}
+      bodyStyle={{ maxHeight: '100%' }}
     >
       {isTodaySubmitted ? (
         <div>今天已经提交过了。</div>

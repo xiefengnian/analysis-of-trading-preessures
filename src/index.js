@@ -50,9 +50,7 @@ app.post('/submit_daily.json', async (req, res) => {
       avg22: await ReportModel.getAvg(22),
     });
 
-    console.log(report);
-
-    // await report.save();
+    await report.save();
 
     res.send({
       success: true,

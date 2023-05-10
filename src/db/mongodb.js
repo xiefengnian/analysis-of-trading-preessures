@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const MONGO_URL =
-  process.env.MONGO_URL || 'mongodb://localhost:27017/stress_monitor';
+  process.env.MONGO_URL || 'mongodb://test:test@localhost:27017/stress_monitor';
 
 console.log('MONGO_URL', MONGO_URL);
 
